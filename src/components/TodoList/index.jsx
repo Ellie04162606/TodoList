@@ -17,6 +17,6 @@ class TodoList extends Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  addItem: (inputValue) => dispatch({ type: "add_Item", itemText: inputValue }),
+  addItem: (addItem) => dispatch({ type: "add_Item", payload: addItem }),
 });
 export default connect(null, mapDispatchToProps)(TodoList);

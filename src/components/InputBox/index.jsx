@@ -6,7 +6,6 @@ class InputBox extends Component {
     this.state = {
       inputValue: "",
     };
-    // Array.filter((item, index) => action.index !==0 )
   }
   handleReInput = (event) => {
     this.setState({
@@ -24,13 +23,11 @@ class InputBox extends Component {
     if (this.state.inputValue === "") {
       alert("input should not be null");
     } else {
-      // this.props.addItem(this.state.inputValue);\
-      //add
       Axios.post("https://5e9ec500fb467500166c4658.mockapi.io/todos", {
         content: this.state.inputValue,
         status: false
       }).then((res) => {
-        console.log(res.data);
+        this.props.addItem(res.data);
       });
     }
     this.clearItemText();
