@@ -21,7 +21,7 @@ class InputBox extends Component {
   };
 
   addItemText = () => {
-    if (this.state.inputValue == "") {
+    if (this.state.inputValue === "") {
       alert("input should not be null");
     } else {
       this.props.addItem(this.state.inputValue);

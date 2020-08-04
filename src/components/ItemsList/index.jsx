@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Item from "../Item";
-import { connect, useDispatch } from "react-redux";
+import { connect } from "react-redux";
 class ItemList extends Component {
   render() {
     console.log(this.props.items);
