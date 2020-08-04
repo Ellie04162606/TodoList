@@ -3,33 +3,24 @@ import Item from "../Item";
 import { connect } from "react-redux";
 import Axios from "axios";
 class ItemList extends Component {
-    constructor(props){
-        super(props)
-        this.state = {
-            TodoList:[]
-        }
-    }
+  constructor(props) {
+    super(props);
+    this.state = {
+      TodoList: [],
+    };
+  }
   render() {
     console.log(this.props.items);
     return (
       <div>
-        {/* {this.props.items.map((item, index) => (
-          <Item
-            key={index}
-            index={index}
-            content={item.content}
-            status={item.status}
-            deleteItem={this.props.deleteItem}
-            handleMark={this.props.handleMark}
-          />
-        ))} */}
         {this.state.TodoList
-          ? this.state.TodoList.map((item, index) => (
+          ? this.props.items.map((item, index) => (
               <Item
                 key={index}
-                index={index}
+                id={item.id}
                 content={item.content}
                 status={item.status}
+                updateItemsList={this.componentDidMount}
                 deleteItem={this.props.deleteItem}
                 handleMark={this.props.handleMark}
               />
@@ -39,11 +30,14 @@ class ItemList extends Component {
     );
   }
 
-  componentDidMount(){
+  componentWillMount() {
+      const self = this
     Axios.get("https://5e9ec500fb467500166c4658.mockapi.io/todos").then(
       (res) => {
-            console.log(res.data);
-          this.setState({ TodoList: res.data });
+        console.log(res.data);
+        for (let addData of res.data) {
+            self.props.addItem(addData);
+        }
       }
     );
   }
@@ -53,6 +47,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
+    addItem: (addItem) => dispatch({type: "add_Item", payload: addItem}),
   deleteItem: (inputIndex) =>
     dispatch({ type: "delete_Item", index: inputIndex }),
   handleMark: (inputIndex) =>

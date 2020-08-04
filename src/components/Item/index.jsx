@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+import Axios from "axios";
 class Item extends Component {
   render() {
     return (
@@ -17,14 +17,26 @@ class Item extends Component {
     );
   }
 
+
+
   handleMark = () => {
-    this.props.handleMark(this.props.index);
+    const self = this
+    Axios.put(
+      "https://5e9ec500fb467500166c4658.mockapi.io/todos/" + this.props.id
+    ).then((res) => {
+      self.props.handleMark();
+    });
   };
 
   onClickDelete = () => {
-    this.props.deleteItem(this.props.index);
+    const self = this
+    Axios.delete("https://5e9ec500fb467500166c4658.mockapi.io/todos/"+ this.props.id,{
+    }).then(
+      (res) => {
+                 self.props.deleteItem(self.props.id);
+               }
+    );
   };
-  // map
 }
 
 export default Item;
