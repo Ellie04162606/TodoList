@@ -10,8 +10,10 @@ class ItemList extends Component {
           <Item
             key={index}
             index={index}
-            content={item}
+            content ={item.content}
+            status={item.status}
             deleteItem={this.props.deleteItem}
+            handleMark={this.props.handleMark}
           />
         ))}
       </div>
@@ -25,6 +27,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => ({
   deleteItem: (inputIndex) =>
     dispatch({ type: "delete_Item", index: inputIndex }),
+  handleMark: (inputIndex) =>
+    dispatch({ type: "mark_Item", index: inputIndex }),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ItemList);
