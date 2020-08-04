@@ -17,25 +17,23 @@ class Item extends Component {
     );
   }
 
-
-
   handleMark = () => {
-    const self = this
+    const self = this;
     Axios.put(
-      "https://5e9ec500fb467500166c4658.mockapi.io/todos/" + this.props.id
+      "https://5e9ec500fb467500166c4658.mockapi.io/todos/" + self.props.id
     ).then((res) => {
-      self.props.handleMark();
+      self.props.handleMark(self.props.id);
     });
   };
 
   onClickDelete = () => {
-    const self = this
-    Axios.delete("https://5e9ec500fb467500166c4658.mockapi.io/todos/"+ this.props.id,{
-    }).then(
-      (res) => {
-                 self.props.deleteItem(self.props.id);
-               }
-    );
+    const self = this;
+    Axios.delete(
+      "https://5e9ec500fb467500166c4658.mockapi.io/todos/" + self.props.id,
+      {}
+    ).then((res) => {
+      self.props.deleteItem(self.props.id);
+    });
   };
 }
 
