@@ -1,39 +1,52 @@
 import React, { Component } from "react";
-import Axios from "axios";
+import { Row, Col } from "antd";
+import { Switch } from "antd";
+import { updateItem, deleteItem } from "../../axios/todoApi";
 class Item extends Component {
   render() {
     return (
-      <div>
-        <label
-          style={{
-            textDecorationLine: this.props.status ? "line-through" : "none",
-          }}
-          onClick={this.handleMark}
-        >
-          {this.props.content}
-        </label>
-        <button onClick={this.onClickDelete}>×</button>
-      </div>
+      <Row style={{ margin: "10px 0px" }}>
+        <Col span={20}>
+          <label
+            style={{
+              textDecorationLine: this.props.status ? "line-through" : "none",
+            }}
+            onClick={this.handleMark}
+          >
+            {this.props.content}
+          </label>
+        </Col>
+        <Col span={2}>
+          <Switch defaultChecked onChange={this.handleMark} />
+        </Col>
+        <Col span={2}>
+          <button onClick={this.onClickDelete}>×</button>
+        </Col>
+      </Row>
     );
   }
 
-  handleMark = () => {
+  handleMark = async () => {
     const self = this;
-    Axios.put(
-      "https://5e9ec500fb467500166c4658.mockapi.io/todos/" + self.props.id
-    ).then((res) => {
-      self.props.handleMark(self.props.id);
+    const { status, data } = await updateItem({
+      id: self.props.id,
+      content: self.props.content,
+      status: !self.props.status,
     });
+    if (status === 200) {
+      self.props.handleMark(data);
+    }
   };
 
-  onClickDelete = () => {
+  //todo try-catch
+  onClickDelete = async () => {
     const self = this;
-    Axios.delete(
-      "https://5e9ec500fb467500166c4658.mockapi.io/todos/" + self.props.id,
-      {}
-    ).then((res) => {
-      self.props.deleteItem(self.props.id);
+    const { status } = await deleteItem({
+      id: self.props.id,
     });
+    if (status === 200) {
+      self.props.deleteItem(self.props.id);
+    }
   };
 }
 

@@ -4,18 +4,27 @@ import './App.css';
 import TodoList from "./components/TodoList";
 import { HashRouter, Route } from "react-router-dom";
 import FinishedItemsList from "./components/FinishedItemsList";
-import Menu from "./menu"
+import ToDoMenu from "./Menu";
+import { Layout } from "antd";
+
+const { Header, Content } = Layout;
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <HashRouter>
-          <Menu />
-          <Route>
-            <Route path="/" exact component={TodoList} />
-            <Route path="/finished" exact component={FinishedItemsList} />
-          </Route>
-        </HashRouter>
+        <Layout style={{ width :"80%"}}>
+          <HashRouter>
+            <Header style={{ padding: "0 0px" }}>
+              <ToDoMenu />
+            </Header>
+            <Content>
+              <Route>
+                <Route path="/" exact component={TodoList} />
+                <Route path="/finished" exact component={FinishedItemsList} />
+              </Route>
+            </Content>
+          </HashRouter>
+        </Layout>
       </header>
     </div>
   );

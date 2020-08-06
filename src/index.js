@@ -6,7 +6,10 @@ import * as serviceWorker from './serviceWorker';
 import { createStore } from 'redux';
 import reducer from './redux/reducer';
 import { Provider } from 'react-redux';
+import "antd/dist/antd.css";
+
 const store = createStore(reducer);
+
 ReactDOM.render(
   <Provider store={store}>
     <App />

@@ -1,29 +1,45 @@
 import { createReducer } from "@reduxjs/toolkit";
-
+import {
+  ADD_ITEM,
+  DELETE_ITEM,
+  MARK_ITEM,
+  GET_ALL_ITEM,
+} from "../actions/actions_type.js";
 const defaultstate = {
   itemList: [],
 };
 
 export default createReducer(defaultstate, {
-  add_Item: (state, action) => ({
+  [ADD_ITEM]: (state, action) => ({
     itemList: [
       ...state.itemList,
-      { id: action.payload.id, content: action.payload.content, status: false },
+      {
+        id: action.payload.id,
+        content: action.payload.content,
+        status: action.payload.status,
+      },
     ],
   }),
-  delete_Item: (state, action) => ({
-    itemList: state.itemList.filter((item, index) => action.index !== item.id),
+
+  [DELETE_ITEM]: (state, action) => ({
+    itemList: state.itemList.filter((item) => action.index !== item.id),
   }),
-  mark_Item: (state, action) => ({
-    itemList: state.itemList.map((item, index) => {
-      if (item.id === action.index) {
-        console.log(item.id === action.index);
+
+  [MARK_ITEM]: (state, action) => ({
+    itemList: state.itemList.map((item) => {
+      const result = action.index;
+      if (item.id === result.id) {
         return {
-          content: item.content,
-          status: !item.status,
+          id: result.id,
+          content: result.content,
+          status: result.status,
         };
       }
       return item;
     }),
+  }),
+
+  [GET_ALL_ITEM]: (state, action) => ({
+    itemList: action.payload,
   }),
 });
